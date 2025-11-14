@@ -5,6 +5,8 @@ import dev.lrcode.notifications.domain.enums.NotificationStatus;
 import jakarta.persistence.*;
 import lombok.*;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "notifications")
@@ -44,6 +46,9 @@ public class Notification {
     private LocalDateTime createdAt;
 
     private LocalDateTime updatedAt;
+
+    @OneToMany(mappedBy = "notification", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<NotificationAttempt> attempts = new ArrayList<>();
 
     @PrePersist
     public void prePersist() {

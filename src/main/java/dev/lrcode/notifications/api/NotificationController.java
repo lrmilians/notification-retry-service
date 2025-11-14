@@ -1,11 +1,16 @@
 package dev.lrcode.notifications.api;
 
-import dev.lrcode.notifications.api.dto.NotificationRequest;
-import dev.lrcode.notifications.api.dto.NotificationResponse;
+import dev.lrcode.notifications.api.dto.*;
 import dev.lrcode.notifications.application.NotificationService;
+import dev.lrcode.notifications.domain.enums.NotificationChannel;
+import dev.lrcode.notifications.domain.enums.NotificationStatus;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
@@ -38,5 +43,30 @@ public class NotificationController {
 
         return ResponseEntity.ok("Retry scheduled for immediate execution.");
     }
+
+    @GetMapping("/paged")
+    public ResponseEntity<PagedResponse<NotificationResponse>> listPaged(
+            @RequestParam(required = false) NotificationStatus status,
+            @RequestParam(required = false) NotificationChannel channel,
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "10") int size
+    ) {
+        Pageable pageable = PageRequest.of(page, size);
+
+        PagedResponse<NotificationResponse> response =
+                service.listPaged(status, channel, pageable);
+
+        return ResponseEntity.ok(response);
+    }
+
+    @GetMapping("/{id}/attempts")
+    public ResponseEntity<List<NotificationAttemptResponse>> attempts(@PathVariable String id) {
+
+        return service.findById(id)
+                .map(n -> ResponseEntity.ok(service.listAttempts(id)))
+                .orElse(ResponseEntity.notFound().build());
+    }
+
+
 }
 

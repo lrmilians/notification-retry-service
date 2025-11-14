@@ -1,5 +1,6 @@
 package dev.lrcode.notifications.domain.repository;
 
+import dev.lrcode.notifications.domain.enums.NotificationChannel;
 import dev.lrcode.notifications.domain.enums.NotificationStatus;
 import dev.lrcode.notifications.domain.model.Notification;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -12,4 +13,5 @@ public interface NotificationRepository extends JpaRepository<Notification, Stri
             List<NotificationStatus> statuses,
             LocalDateTime now
     );
+
 }

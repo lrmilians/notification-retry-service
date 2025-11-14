@@ -21,3 +21,13 @@ logging:
   level:
     root: INFO
     dev.lrcode.notifications: DEBUG
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health, metrics, prometheus
+  metrics:
+    tags:
+      application: notification-retry-service
+

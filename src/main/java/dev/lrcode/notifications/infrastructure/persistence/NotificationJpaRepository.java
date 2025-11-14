@@ -1,7 +1,10 @@
 package dev.lrcode.notifications.infrastructure.persistence;
 
+import dev.lrcode.notifications.domain.enums.NotificationChannel;
 import dev.lrcode.notifications.domain.enums.NotificationStatus;
 import dev.lrcode.notifications.domain.model.Notification;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.time.LocalDateTime;
@@ -13,5 +16,15 @@ public interface NotificationJpaRepository
     List<Notification> findByStatusInAndNextAttemptAtBefore(
             List<NotificationStatus> statuses,
             LocalDateTime now);
+
+    Page<Notification> findByStatus(NotificationStatus status, Pageable pageable);
+
+    Page<Notification> findByChannel(NotificationChannel channel, Pageable pageable);
+
+    Page<Notification> findByStatusAndChannel(
+            NotificationStatus status,
+            NotificationChannel channel,
+            Pageable pageable
+    );
 }
 
