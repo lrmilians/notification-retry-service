@@ -100,8 +100,13 @@
             <groupId>io.micrometer</groupId>
             <artifactId>micrometer-registry-prometheus</artifactId>
         </dependency>
+        <!-- OpenAPI / Swagger UI for Spring Boot 4 -->
+        <dependency>
+            <groupId>org.springdoc</groupId>
+            <artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
+            <version>2.6.0</version>
+        </dependency>
 	</dependencies>
-
 	<build>
 		<plugins>
 			<plugin>
