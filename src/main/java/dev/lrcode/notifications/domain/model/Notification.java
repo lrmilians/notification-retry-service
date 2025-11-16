@@ -38,8 +38,9 @@ public class Notification {
     @Column(nullable = false)
     private Integer maxAttempts;
 
+    @Builder.Default
     @Column(nullable = false)
-    private Integer attemptCount;
+    private Integer attemptCount = 0;
 
     private LocalDateTime nextAttemptAt;
 

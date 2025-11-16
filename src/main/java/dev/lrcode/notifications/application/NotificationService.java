@@ -82,13 +82,15 @@ public class NotificationService {
                     .build()
             );
 
+            metrics.getNotificationAttempts().increment();   // We always count the attempt
+
             if (success) {
                 n.setStatus(NotificationStatus.SENT);
                 n.setAttemptCount(nextAttempt);
                 n.setNextAttemptAt(null);
                 dao.save(n);
 
-                metrics.getNotificationAttempts().increment();   // We always count the attempt
+                metrics.getNotificationsSent().increment();  // Count successful sends
                 return;
             }
 
@@ -187,4 +189,3 @@ public class NotificationService {
 
 
 }
-
